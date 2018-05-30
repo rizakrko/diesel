@@ -19,6 +19,7 @@ extern crate quote;
 extern crate syn;
 
 use proc_macro::TokenStream;
+// use proc_macro2::TokenStream;
 
 mod diagnostic_shim;
 mod field;
@@ -98,10 +99,11 @@ pub fn derive_sql_type(input: TokenStream) -> TokenStream {
 }
 
 fn expand_derive(
-    input: TokenStream,
-    f: fn(syn::DeriveInput) -> Result<quote::Tokens, Diagnostic>,
+    input: proc_macro::TokenStream,
+    f: fn(syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagnostic>,
 ) -> TokenStream {
     let item = syn::parse(input).unwrap();
+    // let item: syn::DeriveInput= input.into();
     match f(item) {
         Ok(x) => x.into(),
         Err(e) => {

@@ -1,10 +1,9 @@
-use quote;
 use syn;
-
+use proc_macro2;
 use model::*;
 use util::*;
 
-pub fn derive(item: syn::DeriveInput) -> Result<quote::Tokens, Diagnostic> {
+pub fn derive(item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagnostic> {
     let model = Model::from_item(&item)?;
 
     let struct_name = item.ident;
