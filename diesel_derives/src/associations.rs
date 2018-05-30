@@ -85,7 +85,7 @@ impl AssociationOptions {
         let foreign_key = meta.nested_item("foreign_key")
             .ok()
             .map(|i| i.ident_value())
-            .unwrap_or_else(|| Ok(infer_foreign_key(parent_struct.clone())))?;
+            .unwrap_or_else(|| Ok(infer_foreign_key(&parent_struct)))?;
 
         let unrecognized_options = meta.nested()?.skip(1).filter(|n| n.name() != "foreign_key");
         for ignored in unrecognized_options {
@@ -102,7 +102,7 @@ impl AssociationOptions {
     }
 }
 
-fn infer_foreign_key(name: syn::Ident) -> syn::Ident {
+fn infer_foreign_key(name: &syn::Ident) -> syn::Ident {
     let snake_case = camel_to_snake(&name.to_string());
     syn::Ident::new(&format!("{}_id", snake_case), name.span())
 }

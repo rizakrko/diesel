@@ -210,8 +210,8 @@ impl MetaItem {
     fn value_span(&self) -> Span {
         use syn::Meta::*;
 
-        match &self.meta {
-            Word(ident) => ident.span(),
+        match self.meta {
+            Word(ref ident) => ident.span(),
             List(ref meta) => meta.nested.span(),
             NameValue(ref meta) => meta.lit.span(),
         }

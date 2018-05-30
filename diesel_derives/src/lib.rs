@@ -23,7 +23,6 @@ extern crate quote;
 extern crate syn;
 
 use proc_macro::TokenStream;
-// use proc_macro2::TokenStream;
 
 mod diagnostic_shim;
 mod field;
@@ -108,7 +107,6 @@ fn expand_derive(
     f: fn(syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagnostic>,
 ) -> TokenStream {
     let item = syn::parse(input).unwrap();
-    // let item: syn::DeriveInput= input.into();
     match f(item) {
         Ok(x) => x.into(),
         Err(e) => {
