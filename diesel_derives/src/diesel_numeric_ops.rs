@@ -1,5 +1,5 @@
+use proc_macro2::{self, Ident, Span};
 use syn;
-use proc_macro2::{self, Span, Ident};
 use util::*;
 
 pub fn derive(mut item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagnostic> {

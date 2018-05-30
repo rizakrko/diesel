@@ -1,6 +1,6 @@
 use proc_macro2::{self, Ident, Span};
-use util::*;
 use syn;
+use util::*;
 pub fn derive(mut item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagnostic> {
     for ty_param in item.generics.type_params_mut() {
         ty_param.bounds.push(parse_quote!(QueryId));
@@ -18,7 +18,10 @@ pub fn derive(mut item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Di
         .map(|ty_param| &ty_param.ident)
         .map(|ty_param| quote!(<#ty_param as QueryId>::HAS_STATIC_QUERY_ID));
 
-    let dummy_mod = format!("_impl_query_id_for_{}", item.ident.to_string().to_lowercase());
+    let dummy_mod = format!(
+        "_impl_query_id_for_{}",
+        item.ident.to_string().to_lowercase()
+    );
     Ok(wrap_in_dummy_mod(
         Ident::new(&dummy_mod, Span::call_site()),
         quote! {

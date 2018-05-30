@@ -1,6 +1,6 @@
-use syn;
-use proc_macro2::{self, Span, Ident};
 use meta::*;
+use proc_macro2::{self, Ident, Span};
+use syn;
 use util::*;
 
 pub fn derive(mut item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagnostic> {
@@ -23,10 +23,13 @@ pub fn derive(mut item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Di
     }
     let (impl_generics, _, where_clause) = item.generics.split_for_impl();
 
-    let dummy_mod = Ident::new(&format!(
-        "_impl_from_sql_row_for_{}",
-        item.ident.to_string().to_lowercase()
-    ), Span::call_site());
+    let dummy_mod = Ident::new(
+        &format!(
+            "_impl_from_sql_row_for_{}",
+            item.ident.to_string().to_lowercase()
+        ),
+        Span::call_site(),
+    );
     Ok(wrap_in_dummy_mod(
         dummy_mod,
         quote! {

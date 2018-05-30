@@ -4,7 +4,7 @@ use syn::*;
 pub use diagnostic_shim::*;
 use meta::*;
 
-pub fn wrap_in_dummy_mod(const_name: Ident, item: TokenStream) -> TokenStream{
+pub fn wrap_in_dummy_mod(const_name: Ident, item: TokenStream) -> TokenStream {
     let call_site = root_span(Span::call_site());
     let use_everything = quote_spanned!(call_site=> __diesel_use_everything!());
     quote! {

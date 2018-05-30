@@ -1,8 +1,8 @@
-use syn;
-use proc_macro2::{self};
 use diagnostic_shim::*;
 use meta::*;
 use model::*;
+use proc_macro2;
+use syn;
 use util::*;
 
 pub fn derive(item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagnostic> {

@@ -1,5 +1,5 @@
-use syn;
 use proc_macro2::{Ident, Span};
+use syn;
 
 use diagnostic_shim::*;
 use field::*;
@@ -40,7 +40,10 @@ impl Model {
 
     pub fn dummy_mod_name(&self, trait_name: &str) -> syn::Ident {
         let name = self.name.to_string().to_lowercase();
-        Ident::new(&format!("_impl_{}_for_{}", trait_name, name), Span::call_site())
+        Ident::new(
+            &format!("_impl_{}_for_{}", trait_name, name),
+            Span::call_site(),
+        )
     }
 
     pub fn fields(&self) -> &[Field] {

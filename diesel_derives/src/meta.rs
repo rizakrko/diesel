@@ -1,7 +1,7 @@
 use proc_macro2::{Ident, Span};
 use syn;
-use syn::spanned::Spanned;
 use syn::fold::Fold;
+use syn::spanned::Spanned;
 
 use resolved_at_shim::*;
 use util::*;
@@ -197,7 +197,8 @@ impl MetaItem {
             Ok(x) => x,
             Err(_) => return,
         };
-        let unrecognized_options = nested.filter(|n| !options.contains(&n.name().to_string().as_str()));
+        let unrecognized_options =
+            nested.filter(|n| !options.contains(&n.name().to_string().as_str()));
         for ignored in unrecognized_options {
             ignored
                 .span()

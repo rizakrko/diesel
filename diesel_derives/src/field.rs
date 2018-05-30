@@ -1,7 +1,7 @@
-use proc_macro2::{self, Span, Ident};
+use proc_macro2::{self, Ident, Span};
 use quote;
-use syn::spanned::Spanned;
 use syn;
+use syn::spanned::Spanned;
 
 use meta::*;
 use util::*;
@@ -49,7 +49,8 @@ impl Field {
     }
 
     pub fn column_name(&self) -> syn::Ident {
-        self.column_name_from_attribute.clone()
+        self.column_name_from_attribute
+            .clone()
             .unwrap_or_else(|| match self.name {
                 FieldName::Named(ref x) => x.clone(),
                 _ => {
@@ -81,7 +82,7 @@ impl FieldName {
         parse_quote!(#tokens)
     }
 
-    pub fn access(&self) -> proc_macro2::TokenStream{
+    pub fn access(&self) -> proc_macro2::TokenStream {
         let span = self.span();
         // Span of the dot is important due to
         // https://github.com/rust-lang/rust/issues/47312
