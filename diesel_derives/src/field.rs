@@ -90,18 +90,18 @@ impl FieldName {
     }
 
     pub fn span(&self) -> Span {
-        match self {
-            &FieldName::Named(ref x) => x.span(),
-            &FieldName::Unnamed(ref x) => x.span,
+        match *self {
+            FieldName::Named(ref x) => x.span(),
+            FieldName::Unnamed(ref x) => x.span,
         }
     }
 }
 
 impl quote::ToTokens for FieldName {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match self {
-            &FieldName::Named(ref x) => x.to_tokens(tokens),
-            &FieldName::Unnamed(ref x) => x.to_tokens(tokens),
+        match *self {
+            FieldName::Named(ref x) => x.to_tokens(tokens),
+            FieldName::Unnamed(ref x) => x.to_tokens(tokens),
         }
     }
 }
